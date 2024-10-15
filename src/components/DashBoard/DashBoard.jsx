@@ -13,6 +13,20 @@ import {
 } from "react-icons/bs";
 import "./DashBoard.css";
 import Card from "../Card/Card";
+const getUpdatedTitle = (title) => {
+  switch (title) {
+    case 'Urgent':
+      return 'Low';
+    case 'High':
+      return 'Medium';
+    case 'Medium':
+      return 'High';
+    case 'Low':
+      return 'Urgent';
+    default:
+      return title;
+  }
+};
 const DashBoard = () => {
   const isStatus = localStorage.getItem("group") === "status";
   const isPriority = localStorage.getItem("group") === "priority";
@@ -84,9 +98,9 @@ const DashBoard = () => {
                         display: "inline-block",
                       }}
                     >
-                      {element[index].title === "Low" ||
-                        element[index].title === "Medium" ||
-                        element[index].title === "High" ? (
+                      {element[index].title === "Urgent" ||
+                        element[index].title === "High" ||
+                        element[index].title === "Medium" ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
 
@@ -103,8 +117,8 @@ const DashBoard = () => {
                             width="3"
                             height="5"
                             opacity={
-                              element[index].title === "Medium" ||
-                                element[index].title === "High"
+                              element[index].title === "High" ||
+                                element[index].title === "Medium"
                                 ? 1
                                 : 0.25
                             }
@@ -114,10 +128,10 @@ const DashBoard = () => {
                             y="4"
                             width="3"
                             height="8"
-                            opacity={element[index].title === "High" ? 1 : 0.25}
+                            opacity={element[index].title === "Medium" ? 1 : 0.25}
                           />
                         </svg>
-                      ) : element[index].title === "Urgent" ? (
+                      ) : element[index].title === "Low" ? (
                         <BsFillExclamationSquareFill />
                       ) : (
                         <p></p>
@@ -126,9 +140,13 @@ const DashBoard = () => {
                   ) : (
                     <DiCodeigniter />
                   )}{" "}
-                  <span>
-                    {element[index]?.title} {element[index].value?.length}
-                  </span>
+    
+
+                
+                <span>
+                  {getUpdatedTitle(element[index]?.title)} {element[index].value?.length}
+                </span>
+
                 </div>
                 <div className="rightView">
                   <AiOutlinePlus />{" "}
